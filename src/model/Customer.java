@@ -36,8 +36,37 @@ public class Customer implements Serializable{
 	private int phoneNumber;
 	private String password;
 	private String gender;
+//	@Column(columnDefinition = "boolean default false")
+//	private String activated2;
+
 	
-	
+
+	public Customer(int customerId, String firstName, String lastName, Date dob, String email, int phoneNumber,
+			String password, String gender, Address address, Bank bank, EMICard card,
+			Installment installment) {
+		super();
+		this.customerId = customerId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dob = dob;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.password = password;
+		this.gender = gender;
+		//this.activated2 = activated2;
+		this.address = address;
+		this.bank = bank;
+		this.card = card;
+		this.installment = installment;
+	}
+
+//	public String getActivated2() {
+//		return activated2;
+//	}
+//
+//	public void setActivated2(String activated2) {
+//		this.activated2 = activated2;
+//	}
 
 	@OneToOne(cascade = CascadeType.ALL)
 	//@JoinColumn(name="addressId")
@@ -60,22 +89,7 @@ public class Customer implements Serializable{
 private Installment installment;
 
 
-	public Customer(int customerId, String firstName, String lastName, Date dob, String email, int phoneNumber,
-		String password, String gender, Address address, Bank bank, EMICard card, Installment installment) {
-	super();
-	this.customerId = customerId;
-	this.firstName = firstName;
-	this.lastName = lastName;
-	this.dob = dob;
-	this.email = email;
-	this.phoneNumber = phoneNumber;
-	this.password = password;
-	this.gender = gender;
-	this.address = address;
-	this.bank = bank;
-	this.card = card;
-	this.installment = installment;
-}
+
 
 	public Installment getInstallment() {
 	return installment;
@@ -94,8 +108,8 @@ public void setInstallment(Installment installment) {
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", firstName=" + firstName + ", lastName=" + lastName + ", dob="
 				+ dob + ", email=" + email + ", phoneNumber=" + phoneNumber + ", password=" + password + ", gender="
-				+ gender + ", address=" + address + ", bank=" + bank + ", card=" + card + ", installment=" + installment
-				+ "]";
+				+ gender +  ", address=" + address + ", bank=" + bank + ", card=" + card
+				+ ", installment=" + installment + "]";
 	}
 
 	public int getCustomerId() {

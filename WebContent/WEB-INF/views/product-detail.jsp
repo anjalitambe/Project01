@@ -149,7 +149,7 @@
                     <h3><%=session.getAttribute("productName")%></h3>
                     <div class="aa-price-block">
                       <span class="aa-product-view-price"><%=session.getAttribute("productPrice")%></span>
-                      <p class="aa-product-avilability">Avilability: <span><%=session.getAttribute("unitStock")%> units in stock</span></p>
+                      <p class="aa-product-avilability">Availability: <span><%=session.getAttribute("unitStock")%> units in stock</span></p>
                     </div>
                     <p><%=session.getAttribute("productDescription")%>                 
                      <div class="aa-prod-quantity"></div>
@@ -170,7 +170,7 @@
                       </p>
                     </div>
                     <div class="aa-prod-view-bottom">
-                      <a class="aa-add-to-cart-btn" href="BuyNow">BUY NOW</a>                      
+                      <a class="aa-add-to-cart-btn" href="BuyNow">BUY NOW</a>       <br><br>               
                     </div>
                   </div>
                 </div>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -71,21 +72,111 @@
      </header>
 <!-- / header section -->
 
- <section id="aa-error">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="aa-error-area">                       
-            <a href="ListCustomers"> Go to User Details</a>
-            <a href="AdminProduct"> Go to Product Details</a>
-            <a href="Product"> Products View</a>
-          </div>
-        </div>
-      </div>
-    </div><br>
-  </section>
-  
-  <!-- footer -->  
+<!-- Cart view section -->
+ <section id="cart-view">
+   <div class="container">
+     <div class="row">
+       <div class="col-md-12">
+         <div class="cart-view-area">
+           <div class="cart-view-table aa-wishlist-table">
+             <form action="">
+               <div class="table-responsive">                  
+                  <table class="table" id="dataTable">                     
+                    <thead>
+                                  
+                      <tr>  
+                     <th>Customer Name</th>
+					<th>Customer Id</th>
+					<th>Bank Id</th>
+					<th>DOB</th>
+					<th>CardType</th>
+					<th>Remaining Credits</th>
+					<th>Valid Date</th>
+					<th>IFSC Code</th>
+					<th>Account Number</th>
+					<th>Balance</th>
+					<th>Status</th>
+					
+					
+					<th>Edit</th>
+					<th>Delete</th>
+					<th>Activate user</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${customers}" var="cust">
+					<tr>
+							<td>${cust.firstName} ${cust.lastName}</td>
+						<td>${cust.customerId}</td>
+						
+						<td>${cust.bank.bankId}</td>
+						<td>${cust.dob}</td>
+						<td>${cust.card.cardType}</td>
+						<td>${cust.card.remaingCredits}</td>
+						<td>${cust.card.validDate}</td>
+						<td>${cust.bank.IFSCCode}</td>
+						<td>${cust.bank.savingsAccNo}</td>
+						<td>${cust.bank.balance}</td>
+
+                        	<td><a href="admin/customer/editCustomer/${cust.customerId}">Edit</a></td>
+						<td><a href="admin/customer/delete/${cust.customerId}" >Delete</a></td>
+						<%-- <td><a href="admin/cardvalid/${cust.activated2}">Verify User</a></td> --%>
+						<td><a href="admin/customer/activatethisCustomer/${cust.customerId}">Activate</a></td>
+				
+					</tr>
+				</c:forEach>
+                    
+                    <!--   <tr>
+                         
+                        <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
+                        <td><a href="#"><img src="img/man/polo-shirt-1.png" alt="img"></a></td>
+                        <td></td>
+                        <td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
+                        
+                        <td>$250</td>
+                        <td>In Stock</td>
+                        <td><a href="#" class="aa-add-to-cart-btn">EDIT</a></td>
+                      </tr>
+                      <tr>
+                        <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
+                        <td><a href="#"><img src="img/man/polo-shirt-2.png" alt="img"></a></td>
+                        <td></td>
+                        <td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
+                        <td>$150</td>
+                        <td>In Stock</td>
+                        <td><a href="#" class="aa-add-to-cart-btn">EDIT</a></td>
+                      </tr>
+                      <tr>
+                        <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
+                        <td><a href="#"><img src="img/man/polo-shirt-3.png" alt="img"></a></td>
+                        <td></td>
+                        <td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
+                        <td>$50</td>
+                        <td>In Stock</td>
+                        <td><a href="#" class="aa-add-to-cart-btn">EDIT</a></td>
+                      </tr>                      -->
+                      </tbody>
+                    </tr>
+                  </table>
+                  <h1>
+                  <a href="AddProduct">Add new product</a></h1>
+                 <div class="row">
+                 <center>
+                    <!--   <input type="button" style="text-align: center" class="aa-browse-btn" value="Add Row"  href="AddProduct"/>
+                      --> </center>
+                     
+                  </div>
+                </div>
+             </form>             
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </section>
+ <!-- / Cart view section -->
+
+   <!-- footer -->  
   <footer id="aa-footer">
       <!-- footer bottom -->
       <div class="aa-footer-top">
@@ -159,4 +250,3 @@
 </body>
 </html>
  
-  

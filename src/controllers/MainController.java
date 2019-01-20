@@ -128,6 +128,13 @@ public class MainController {
 			session.setAttribute("credits",customer.getCard().getCredits());
 				session.setAttribute("remaingCredits",customer.getCard().getRemaingCredits());
 			
+				Product pro=(Product) session.getAttribute("productobj");
+				Installment i=(Installment) session.getAttribute("installmentobj");
+//				session.setAttribute("productName", pro.getProductName());
+//				session.setAttribute("productPrice", pro.getProductPrice());
+//				session.setAttribute("balance",customer.getBank().getBalance());
+//				session.setAttribute("perMonthAmount",i.getPerMonthAmount());
+//				
 //				
 				
 //				int cred = customer.getCard().getCredits();
@@ -187,7 +194,7 @@ public class MainController {
 				Date vd = customerService.createValidDate();
 				customer.getCard().setValidDate(vd);
 			    customerService.addCustomer(customer);
-			    return "regSuccess";
+			    return "regSuccessPage";
 		 	}
 		 
 	
@@ -345,24 +352,33 @@ public class MainController {
 				Product p= (Product) session.getAttribute("productobj");
 				
 				System.out.println("ji");
-				System.out.println(c);
-				System.out.println(p);
+				System.out.println("persisting customer is"+c);
+				System.out.println("persistent product is"+p);
+				System.out.println("persistent installment is"+i);
 				
 				//To deduct emi from bank account
 				double emi=i.getAmountToPay();
 				double bal=c.getBank().getBalance();
-				double newbal= iInstallmentService.calculateNewBal(emi,bal);
-				//double newbal = bal-emi; 
-				System.out.println(newbal);
-				c.getBank().setBalance(newbal);
+				int id = c.getCustomerId();
+				System.out.println("id is"+id);
+				System.out.println("emi is"+emi);
+				System.out.println("balance is"+bal);
+				double newbal= iInstallmentService.calculateNewBal(emi, bal, id);
+				System.out.println("newbal is"+newbal);
+				
+				// old way 
+				//double newbal= iInstallmentService.calculateNewBal(emi,bal);
+//				System.out.println(newbal);
+//				c.getBank().setBalance(newbal);
 				
 				
 				//To deduct credits from EMI Card
 				
 				double cred= c.getCard().getCredits();
+				System.out.println("total credits old"+cred);
 				double price=p.getProductPrice();
-				double remcreds= iInstallmentService.getRemCredits(cred,price);
-				//double remcred= cred-price;
+				double remcreds= iInstallmentService.getRemCredits(cred,price,id);
+		
 				c.getCard().setRemaingCredits(remcreds);
 				session.setAttribute("remaingCredits", remcreds);
 				session.setAttribute("amountToPay", price);
@@ -529,6 +545,73 @@ public class MainController {
 					productService.deleteProduct(productId);
 					
 					return "redirect:/AdminProduct";
+				}
+				
+				
+				
+				
+				
+				
+				
+				////Anjali
+				
+				
+				//list all customers
+				@RequestMapping("ListCustomers") 
+				public ModelAndView getAllCustomers() {
+					//System.out.println("ABC");
+					System.out.println("anjali");
+					  List<Customer> customers = customerService.getAllCustomers(); 
+					  System.out.println(customers);
+					  //((EMICard) customers).getCardType();
+					  
+					  return new ModelAndView("adminCustomerList", "customers", customers);
+					  }
+				
+				
+				//DELETING A PRODUCT BY ADMIN
+				
+				@RequestMapping("admin/customer/delete/{customerId}")
+				public String deleteCustomer(@PathVariable(value = "customerId") Integer customerId) {
+					customerService.deleteCustomer(customerId);
+					
+					return "redirect:/ListCustomers";
+				}
+				
+				
+				//Editing a customer--THIS IS DESI JUGAAD
+				@RequestMapping(value = "/admin/customer/editCustomer/{customerId}")
+				public ModelAndView getEditForm(@PathVariable(value = "customerId") int customerId,
+						//@PathVariable(value="validDate") Date validDate,
+						HttpSession session) {//changed Integer datatype
+					Customer customer= customerService.getCustomerById(customerId);
+//					session.setAttribute("bank",customer.getBank());
+				//	session.setAttribute("address",customer.getAddress());
+//					
+//	               session.setAttribute("dob",customer.getDob());				
+				//	this.customerService.editCustomer(customer);
+							//validDate);
+					System.out.println("ghhh");
+					return new ModelAndView("editAdminCustomer", "editCustomerObj", customer);
+				}
+				
+				@RequestMapping(value = "/tryingAnj",method = RequestMethod.POST)
+				public String trying(@ModelAttribute("editCustomerObj") Customer c,BindingResult r,HttpSession session) {
+				//	System.out.println(r.toString());
+					System.out.println("changed obj");
+					System.out.println(r.toString());
+					System.out.println(c);
+					
+//					boolean actstatus= c.getActivated2();
+//					session.setAttribute("activated2", actstatus);
+//					System.out.println("current status after edit"+actstatus);
+//					
+					customerService.editCustomer(c);
+				c.setAddress((Address) session.getAttribute("address"));
+					
+					//customerService.editCustomer(c,);
+					return "redirect:/ListCustomers";
+					
 				}
 
 				

@@ -193,34 +193,34 @@
                     <table class="aa-totals-table">
                       <tbody>
                         <tr>
-                          <th>Total Credits</th>
+                          <th>Total Credits in your EMIcard</th>
                           <td>Rs.<%=session.getAttribute("credits") %></td>
                         </tr>
                        
-                        <tr>
+                        <%-- <tr>
                            <th>Remaining Credits</th>
                            <td>Rs.<%=session.getAttribute("remaingCredits") %></td>
-                         </tr>
+                         </tr> --%>
                       </tbody>
                     </table><br><br>
-                    <h4>Amount Due Rs.xxxx On date : dd/mm/yyyy </h4>                      
+                    <h4>Your Product </h4>                      
                     <table class="aa-totals-table">
                         <tbody>
                           <tr>
                             <th>Name of Product</th>
-                            <td>xxxxxxx</td>
+                            <td><%=session.getAttribute("productName") %></td>
                           </tr>
                           <tr>
                             <th>Cost of Product</th>
-                            <td>xxxxx</td>
+                            <td><%=session.getAttribute("productPrice") %></td>
                           </tr>
-                          <tr>
+                          <%-- <tr>
                              <th>Amount Paid</th>
-                             <td>xxxxx</td>
-                           </tr>
+                             <td><%=session.getAttribute("credits") %></td>
+                           </tr> --%>
                            <tr>
                               <th>Balance</th>
-                              <td>xxxxx</td>
+                              <td><%=session.getAttribute("balance") %></td>
                             </tr>
                         </tbody>
                       </table><br><br>
